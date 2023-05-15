@@ -173,11 +173,11 @@ public class Treatment extends HttpServlet {
         BDAdaptor bdAdaptor = new BDAdaptor();
 
         result = switch (petitionRequested) {
-            case "all" -> bdAdaptor.getTreatments();
-            case "insert" -> bdAdaptor.insertTreatment(json);
-            case "select" -> bdAdaptor.selectTreatment(json);
-            case "delete" -> bdAdaptor.deleteTreatment(json);
-            default -> "<p>Parámetro desconocido</p>";
+            case "all" -> result = bdAdaptor.getTreatments();
+            case "insert" -> result = bdAdaptor.insertTreatment(json);
+            case "select" -> result = bdAdaptor.selectTreatment(json);
+            case "delete" -> result = bdAdaptor.deleteTreatment(json);
+            default -> result = "<p>Parámetro desconocido</p>";
         };
 
         try (PrintWriter printWriter = response.getWriter()) {
@@ -185,11 +185,25 @@ public class Treatment extends HttpServlet {
             printWriter.println("<!DOCTYPE html>\n" +
                     "<html>\n" +
                     "<head>\n" +
-                    "<title>Get Clínica Resultados</title>\n" +
+                    "<title>Get Tratamiento Resultados</title>\n" +
                     "<meta charset=\"UTF-8\">\n" +
                     "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                    "<style>\n" +
+                    "* {" +
+                    "color: white;" +
+                    "}" +
+                    "body {" +
+                    "display: flex;" +
+                    "justify-content: center;" +
+                    "align-items: center;" +
+                    "background-color: black;\n" +
+                    "}" +
+                    "table {" +
+                    "border: 2px solid white;" +
+                    "}" +
+                    "<style>\n" +
                     "</head>\n" +
-                    "<body style=\"background-color:red;\"><p>Resultado:</p>\n" +
+                    "<body>\n" +
                     result +
                     "</body>\n" +
                     "</html>");
