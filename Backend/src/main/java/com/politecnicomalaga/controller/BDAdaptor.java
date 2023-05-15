@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class BDAdaptor {
-
-
     private String sLastError;
 
     public BDAdaptor() {

@@ -1,7 +1,7 @@
 Reparto de tareas:
 
     - Adrián Borio (Scrum Master):
-        - Soporte y JDBC
+        - Soporte y JDBC: Modificación de Clases (métodos para SQL y Servlet)
 
     - Antonio Cervantes:
         - Control de Excepciones
@@ -11,13 +11,13 @@ Reparto de tareas:
         - Base de datos
 
     - Javier Marrón:
-        - Testing
+        - Testing: ClinicTest
 
     - Ruben Fernández:
-        - JDBC
+        - JDBC: BDAdaptor
 
     - Jose Gómez:
-        - Testing
+        - Testing: Comienzo de la clase ClinicTest
 
 Resultado y decisiones a tomar en la reuniones SCRUM:
 
