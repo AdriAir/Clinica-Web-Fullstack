@@ -1,0 +1,35 @@
+version: "3"
+services:
+  servidorweb:
+   image: tomcat:9.0
+   ports:
+    - "8080:8080"
+   volumes:
+    - ./web:/usr/local/tomcat/webapps
+    - /var/run/docker.sock:/var/run/docker.sock 
+   depends_on:
+      - "bbdd"
+
+  bbdd:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: taller_db
+      MYSQL_ROOT_PASSWORD: secretone
+      MYSQL_PORT: 3306
+    volumes:
+      - ./.db_data:/var/lib/mysql
+      - ./.db_backup:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: "bbdd"
+      PMA_USER: "root"
+      PMA_PASSWORD: "secretone"
+    depends_on:
+      - "bbdd"
+    ports:
+      - "8081:80"
