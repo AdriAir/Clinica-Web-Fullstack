@@ -23,9 +23,9 @@ public class BDAdaptor {
         String dbDriver = "com.mysql.jdbc.Driver";
         String dbURL = "jdbc:mysql://bbdd:3306/";
         // Database name to access
-        String dbName = "taller_db";
-        String dbUsername = "mecanico";
-        String dbPassword = "2secret2know";
+        String dbName = "ClinicaDentista";
+        String dbUsername = "principal";
+        String dbPassword = "1234";
 
         try {
             Class.forName(dbDriver);
@@ -40,7 +40,7 @@ public class BDAdaptor {
 
     public String getProveedores() {
         String resultado = "";
-        String id, nombre, fecha, direccion, telefono, email, contacto;
+        String id, name, surname, phoneNumber, email, dni, bornDate;
         Connection con = null;
         Statement st = null;
         PreparedStatement ps = null;
@@ -60,12 +60,12 @@ public class BDAdaptor {
             {
                 iRows++;
                 id = (rs.getString("id"));
-                nombre = rs.getString("nombre");
-                fecha = rs.getString("fechaAlta");
-                direccion = rs.getString("direccion");
-                telefono = rs.getString("telefono");
-                email = rs.getString("email");
-                contacto = rs.getString("contacto");
+                name = rs.getString("name");
+                surname = rs.getString("surname");
+                phoneNumber = rs.getString("direccion");
+                email = rs.getString("telefono");
+                dni = rs.getString("email");
+                bornDate = rs.getString("contacto");
 
                 // save the results
                 resultado += "<p>" + id + ";" +
