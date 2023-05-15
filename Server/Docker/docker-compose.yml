@@ -14,7 +14,7 @@ services:
     image: mysql:latest
     restart: always
     environment:
-      MYSQL_DATABASE: taller_db
+      MYSQL_DATABASE: ClinicaDentista
       MYSQL_ROOT_PASSWORD: secretone
       MYSQL_PORT: 3306
     volumes:
@@ -27,8 +27,8 @@ services:
     image: phpmyadmin/phpmyadmin:latest
     environment:
       PMA_HOST: "bbdd"
-      PMA_USER: "root"
-      PMA_PASSWORD: "secretone"
+      PMA_USER: "principal"
+      PMA_PASSWORD: "1234"
     depends_on:
       - "bbdd"
     ports:

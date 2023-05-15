@@ -3,6 +3,7 @@ Reparto de tareas:
     - Adrián Borio (Scrum Master):
         - Soporte y JDBC: Modificación de Clases (métodos para SQL y Servlet)
         - BDAdaptor: Formato de las tablas para HTML
+        - Docker SetUp (TomCat Web Server && MySql Server)
 
     - Antonio Cervantes:
         - Control de Excepciones en todo el modelo
