@@ -2,22 +2,23 @@ Reparto de tareas:
 
     - Adrián Borio (Scrum Master):
         - Soporte y JDBC: Modificación de Clases (métodos para SQL y Servlet)
+        - BDAdaptor: Formato de las tablas para HTML
 
     - Antonio Cervantes:
-        - Control de Excepciones
+        - Control de Excepciones en todo el modelo
 
     - Sandra Román:
         - Usuario en MySql
         - Base de datos
 
     - Javier Marrón:
-        - Testing: ClinicTest
+        - Test del modelo completo
 
     - Ruben Fernández:
-        - JDBC: BDAdaptor
+        - JDBC: BDAdaptor (SQL Queries)
 
     - Jose Gómez:
-        - Testing: Comienzo de la clase ClinicTest
+        - Testing: Testing de la Clínica
 
 Resultado y decisiones a tomar en la reuniones SCRUM:
 
@@ -42,14 +43,14 @@ Objetivos:
 
     Revisión del modelo:
 
-        [] Añadir Control de Exepciones
-        [] Revisar el correcto funcionamiento del modelo (no hace falta usar tests, pero a quien le toque, si lo hace, le irá mejor para el examen)
+        [X] Añadir Control de Exepciones
+        [-] Revisar el correcto funcionamiento del modelo (no hace falta usar tests, pero a quien le toque, si lo hace, le irá mejor para el examen)
 
     Base de datos:
 
-        [] Crear un usuarios con privilegios para realizar consultas e insertar datos
+        [X] Crear un usuarios con privilegios para realizar consultas e insertar datos
         [] Crear controlador para manejar una base de datos en MySQL para las 3 tablas (clínica, pacientes y tratamientos) con la librería JDBC
-        [] Crear controlador para poder interconectar el servicio MySQL con el servicio web creado en un servlet (app para el server) Tomcat ejecutado en un contenedor de software (Docker)
+        [] Controlar las HTTPServlets
 
     Montar Servidor:
 
