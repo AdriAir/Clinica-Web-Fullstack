@@ -160,9 +160,9 @@ public class Clinic extends HttpServlet {
 
 
     public Patient[] getPatients() {
-        if (patients.size() == 0) return null;
-        Patient[] patient = new Patient[patients.size()];
-        return patients.toArray(patient);
+        if (this.patients.size() == 0) return null;
+        Patient[] patients = new Patient[this.patients.size()];
+        return this.patients.toArray(patients);
     }
 
     public boolean updatePatient(String dni, String field, Patient.patientAttributes patientAttributes) {

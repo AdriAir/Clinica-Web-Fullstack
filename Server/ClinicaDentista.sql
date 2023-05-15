@@ -15,10 +15,10 @@ USE ClinicaDentista;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ClinicaDentista`.`Clinic` (
   `cif` VARCHAR(15) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `address` VARCHAR(45) NULL,
-  `phoneNumber` VARCHAR(45) NULL,
-  `email` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `address` VARCHAR(45) NOT NULL,
+  `phoneNumber` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
   UNIQUE INDEX `cif_UNIQUE` (`cif` ASC) VISIBLE,
   PRIMARY KEY (`cif`))
 ENGINE = InnoDB;
@@ -29,11 +29,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ClinicaDentista`.`Patient` (
   `dni` VARCHAR(9) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `phoneNumber` VARCHAR(45) NULL,
-  `email` VARCHAR(45) NULL,
-  `bornDate` DATE NULL,
-  `clinic` VARCHAR(15) NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `phoneNumber` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `bornDate` DATE NOT NULL,
+  `clinic` VARCHAR(15) NOT NULL,
   PRIMARY KEY (`dni`),
   UNIQUE INDEX `dni_UNIQUE` (`dni` ASC) VISIBLE,
   INDEX `clinic_idx` (`clinic` ASC) VISIBLE,
@@ -50,11 +50,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ClinicaDentista`.`Treatment` (
   `code` VARCHAR(45) NOT NULL,
-  `description` VARCHAR(100) NULL,
-  `date` DATE NULL,
-  `price` DECIMAL(10,2) NULL,
-  `isPaid` TINYINT NULL,
-  `patient` VARCHAR(9) NULL,
+  `description` VARCHAR(100) NOT NULL,
+  `date` DATE NOT NULL,
+  `price` DECIMAL(10,2) NOT NULL,
+  `isPaid` TINYINT NOT NULL,
+  `patient` VARCHAR(9) NOT NULL,
   PRIMARY KEY (`code`),
   UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE,
   INDEX `patient_idx` (`patient` ASC) VISIBLE,
