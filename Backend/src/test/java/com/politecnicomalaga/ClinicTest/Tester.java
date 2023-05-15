@@ -24,8 +24,11 @@ public class Tester {
         assertEquals(500, miClinica.getPatients().length);
     }
 
-    @org.junit.Test
+    @Test
     public void removePatient() {
+        Clinic miCLinica= new Clinic("clinica", "address","phoneNumber","email", "cif");
+        miCLinica.addPatient(new Patient("name","surname", "phone_number", "email", "1", "bornDate"));
+        miCLinica.removePatient("1");
     }
 
     @org.junit.Test
