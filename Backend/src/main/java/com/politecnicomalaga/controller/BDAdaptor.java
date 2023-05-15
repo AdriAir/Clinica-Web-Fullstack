@@ -1,5 +1,7 @@
 package com.politecnicomalaga.controller;
 
+import com.politecnicomalaga.model.Clinic;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,7 +17,7 @@ public class BDAdaptor {
     }
 
     private Connection initDatabase() {
-        Connection con = null;
+        Connection connection = null;
         // Initialize all the information regarding
         // Database Connection
         String dbDriver = "com.mysql.jdbc.Driver";
@@ -27,52 +29,47 @@ public class BDAdaptor {
 
         try {
             Class.forName(dbDriver);
-            con = DriverManager.getConnection(dbURL + dbName, dbUsername, dbPassword);
+            connection = DriverManager.getConnection(dbURL + dbName, dbUsername, dbPassword);
         } catch (Exception e) {
             sLastError = sLastError + "<p>Error conectando a la BBDD: " + e.getMessage() + "</p>";
             e.printStackTrace();
         }
-        return con;
+        return connection;
     }
 
-
-    public String getProveedores() {
+    public String getClinics() {
         String resultado = "";
-        String id, name, surname, phoneNumber, email, dni, bornDate;
-        Connection con = null;
-        Statement st = null;
-        PreparedStatement ps = null;
+        String cif, name, address, phoneNumber, email;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
         int iRows = 0;
         try {
-            con = this.initDatabase();
+            connection = this.initDatabase();
 
-            //st = con.createStatement();
-            ps = con.prepareStatement("select * from proveedores");
+            //statement = connection.createStatement();
+            preparedStatement = connection.prepareStatement("select * from Clinic");
 
 
-            //ResultSet rs = st.executeQuery("select * from proveedores");
-            ResultSet rs = ps.executeQuery();
+            //ResultSet resultSet = statement.executeQuery("select * from proveedores");
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             // iteración sobre el resultset
-            while (rs.next())  //Mientras tengamos rows de salida...
+            while (resultSet.next())  //Mientras tengamos rows de salida...
             {
                 iRows++;
-                id = (rs.getString("id"));
-                name = rs.getString("name");
-                surname = rs.getString("surname");
-                phoneNumber = rs.getString("direccion");
-                email = rs.getString("telefono");
-                dni = rs.getString("email");
-                bornDate = rs.getString("contacto");
+                cif = (resultSet.getString("cif"));
+                name = resultSet.getString("name");
+                address = resultSet.getString("address");
+                phoneNumber = resultSet.getString("phoneNumber");
+                email = resultSet.getString("email");
 
                 // save the results
-                resultado += "<p>" + id + ";" +
-                        nombre + ";" +
-                        fecha + ";" +
-                        direccion + ";" +
-                        telefono + ";" +
-                        email + ";" +
-                        contacto + "</p>\n";
+                resultado += "<p>" + cif + ";" +
+                        name + ";" +
+                        address + ";" +
+                        phoneNumber + ";" +
+                        email + "</p>\n";
             }
         } catch (Exception e) {
             sLastError = sLastError + "<p>Error accediendo a la BBDD Select: " + e.getMessage() + "</p>";
@@ -80,8 +77,8 @@ public class BDAdaptor {
         } finally {
             // Liberamos recursos. Cerramos sentencia y conexión
             try {
-                if (st != null) st.close();
-                if (con != null) con.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
             } catch (Exception e) {
                 sLastError = sLastError + "<p>Error cerrando la BBDD: " + e.getMessage() + "</p>";
                 e.printStackTrace();
@@ -92,35 +89,27 @@ public class BDAdaptor {
         if (sLastError.isEmpty()) return resultado;
         else return resultado + sLastError;
     }
-
-
-    //Método de inserción en la tabla de proveedores de un nuevo valor.
-    public String insertProveedor(String sCSV) {
+    public String insertClinic(String json) {
         String resultado = "<p>Error al insertar</p>";
-        String id, nombre, fecha, direccion, telefono, email, contacto;
-        Connection con = null;
-
-        Proveedor miPr = new Proveedor(sCSV);
-
-        PreparedStatement ps = null;
+        Connection connection = null;
+        Clinic clinic = FileController.readJson(json);
+        PreparedStatement preparedStatement = null;
 
         try {
-            con = this.initDatabase();
+            connection = this.initDatabase();
 
-            //st = con.createStatement();
-            ps = con.prepareStatement("insert into proveedores (id,nombre,fechaAlta,direccion,telefono,email,contacto) values (?,?,?,?,?,?,?)");
-            ps.setString(1, String.valueOf((int) (Math.random() * 100000)));
-            ps.setString(2, miPr.nombreProveedor);
-            ps.setString(3, miPr.fechaAlta);
-            ps.setString(4, miPr.direccionPostal);
-            ps.setString(5, miPr.numeroTelefono);
-            ps.setString(6, miPr.email);
-            ps.setString(7, miPr.personaDeContacto);
+            //statement = connection.createStatement();
+            preparedStatement = connection.prepareStatement("insert into Clinic (cif,name,address,phoneNumber,email) values (?,?,?,?,?)");
+            preparedStatement.setString(1, clinic.getCif());
+            preparedStatement.setString(2, clinic.getName());
+            preparedStatement.setString(3, clinic.getAddress());
+            preparedStatement.setString(4, clinic.getPhoneNumber());
+            preparedStatement.setString(5, clinic.getEmail());
 
 
-            if (ps.executeUpdate() != 0)
+            if (preparedStatement.executeUpdate() != 0)
                 resultado = "<p>Proveedor insertado correctamente</p>";
-            else resultado = "<p>Algo ha salido mal con la sentencia Insert Proveedores</p>";
+            else resultado = "<p>Algo ha salido mal connection la sentencia Insert Proveedores</p>";
             //En este caso es una orden hacia la BBDD, y no tenemos
             //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
             //que hacer entonces aquí
@@ -131,8 +120,8 @@ public class BDAdaptor {
         } finally {
             // Liberamos recursos. Cerramos sentencia y conexión
             try {
-                if (ps != null) ps.close();
-                if (con != null) con.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
             } catch (Exception e) {
                 sLastError = sLastError + "<p>Error cerrando la BBDD: " + e.getMessage() + "</p>";
                 e.printStackTrace();
@@ -143,5 +132,112 @@ public class BDAdaptor {
         else return resultado + sLastError;
 
     }
+    public String getPatients() {
+        String resultado = "";
+        String dni, name, phoneNumber, email, bornDate, clinic;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        int iRows = 0;
+        try {
+            connection = this.initDatabase();
 
+            //statement = connection.createStatement();
+            preparedStatement = connection.prepareStatement("select * from Patient");
+
+
+            //ResultSet resultSet = statement.executeQuery("select * from proveedores");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // iteración sobre el resultset
+            while (resultSet.next())  //Mientras tengamos rows de salida...
+            {
+                iRows++;
+                dni = (resultSet.getString("dni"));
+                name = resultSet.getString("name");
+                phoneNumber = resultSet.getString("phoneNumber");
+                email = resultSet.getString("email");
+                bornDate = resultSet.getString("bornDate");
+                clinic = resultSet.getString("clinic");
+
+                // save the results
+                resultado += "<p>" + dni + ";" +
+                        name + ";" +
+                        phoneNumber + ";" +
+                        email + ";" +
+                        bornDate + ";" +
+                        clinic + "</p>\n";
+            }
+        } catch (Exception e) {
+            sLastError = sLastError + "<p>Error accediendo a la BBDD Select: " + e.getMessage() + "</p>";
+            e.printStackTrace();
+        } finally {
+            // Liberamos recursos. Cerramos sentencia y conexión
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception e) {
+                sLastError = sLastError + "<p>Error cerrando la BBDD: " + e.getMessage() + "</p>";
+                e.printStackTrace();
+
+            }
+        }
+        resultado += "\n<p>Rows recogidas: " + iRows + "</p>\n";
+        if (sLastError.isEmpty()) return resultado;
+        else return resultado + sLastError;
+    }
+    public String getTreatments() {
+        String resultado = "";
+        String code, description, date, price, isPaid, patient;
+        Connection connection = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        int iRows = 0;
+        try {
+            connection = this.initDatabase();
+
+            //statement = connection.createStatement();
+            preparedStatement = connection.prepareStatement("select * from Treatment");
+
+
+            //ResultSet resultSet = statement.executeQuery("select * from proveedores");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // iteración sobre el resultset
+            while (resultSet.next())  //Mientras tengamos rows de salida...
+            {
+                iRows++;
+                code = (resultSet.getString("code"));
+                description = resultSet.getString("description");
+                date = resultSet.getString("date");
+                price = resultSet.getString("price");
+                isPaid = resultSet.getString("isPaid");
+                patient = resultSet.getString("patient");
+
+                // save the results
+                resultado += "<p>" + code + ";" +
+                        description + ";" +
+                        date + ";" +
+                        price + ";" +
+                        isPaid + ";" +
+                        patient + "</p>\n";
+            }
+        } catch (Exception e) {
+            sLastError = sLastError + "<p>Error accediendo a la BBDD Select: " + e.getMessage() + "</p>";
+            e.printStackTrace();
+        } finally {
+            // Liberamos recursos. Cerramos sentencia y conexión
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception e) {
+                sLastError = sLastError + "<p>Error cerrando la BBDD: " + e.getMessage() + "</p>";
+                e.printStackTrace();
+
+            }
+        }
+        resultado += "\n<p>Rows recogidas: " + iRows + "</p>\n";
+        if (sLastError.isEmpty()) return resultado;
+        else return resultado + sLastError;
+    }
 }

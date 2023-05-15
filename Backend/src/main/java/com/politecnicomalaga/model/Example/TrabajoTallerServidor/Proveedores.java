@@ -4,8 +4,7 @@
  */
 package com.politecnicomalaga.model.Example.TrabajoTallerServidor;
 
-import com.politecnicomalaga.controller.BDAdaptor;
-import com.politecnicomalaga.controller.BDAdaptor;
+//import com.politecnicomalaga.controller.BDAdaptador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,17 +31,19 @@ public class Proveedores extends HttpServlet {
         String data = request.getParameter("data");  //data enviados en CSV
 
         response.setContentType("text/html;charset=UTF-8");
-
-        String result = "";
-        BDAdaptor bdAdaptor = new BDAdaptor();
-
-        result = switch (petitionRequested) {
-            case "all" -> bdAdaptor.getProveedores();
-            case "insert" -> bdAdaptor.insertProveedor(data);
-            default -> "<p>Parámetro desconocido</p>";
-        };
-
-        try (PrintWriter out = response.getWriter()) {
+        
+        String resultado = "";
+        //BDAdaptador bd = new BDAdaptador();
+        
+        /*switch (peticionSolicitada) {
+            case "todos": resultado = bd.getProveedores();
+                 break;
+            case "insertar": resultado = bd.insertProveedor(datos);
+                 break;
+            default: resultado = "<p>Parámetro desconocido</p>";
+        }*/
+        
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             //out.print(result);
             out.println("<!DOCTYPE html>\n" +

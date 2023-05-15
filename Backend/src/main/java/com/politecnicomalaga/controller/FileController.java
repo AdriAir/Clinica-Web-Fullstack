@@ -1,4 +1,4 @@
-package com.politecnicomalaga.controller.Files;
+package com.politecnicomalaga.controller;
 
 import com.google.gson.Gson;
 import com.politecnicomalaga.model.Clinic;
