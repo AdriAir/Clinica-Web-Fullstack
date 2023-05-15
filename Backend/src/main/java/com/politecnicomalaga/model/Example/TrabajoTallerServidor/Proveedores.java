@@ -4,7 +4,7 @@
  */
 package com.politecnicomalaga.model.Example.TrabajoTallerServidor;
 
-import com.politecnicomalaga.controller.BDAdaptador;
+//import com.politecnicomalaga.controller.BDAdaptador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,15 +35,15 @@ public class Proveedores extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         String resultado = "";
-        BDAdaptador bd = new BDAdaptador();
+        //BDAdaptador bd = new BDAdaptador();
         
-        switch (peticionSolicitada) {
+        /*switch (peticionSolicitada) {
             case "todos": resultado = bd.getProveedores();
                  break;
             case "insertar": resultado = bd.insertProveedor(datos);
                  break;
             default: resultado = "<p>Parámetro desconocido</p>";
-        }
+        }*/
         
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
