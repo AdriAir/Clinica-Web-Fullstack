@@ -53,8 +53,8 @@ public class FileController {
     }
 
     //JSON
-    public static void writeJson(Clinic Clinic, String path) throws IOException {
-        writeText(new Gson().toJson(Clinic), path);
+    public static void writeJson(Clinic clinic, String path) throws IOException {
+        writeText(new Gson().toJson(clinic), path);
     }
 
     public static Clinic readJson(String json) {
