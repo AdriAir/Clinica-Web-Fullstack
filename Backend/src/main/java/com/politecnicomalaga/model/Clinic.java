@@ -120,7 +120,7 @@ public class Clinic extends HttpServlet {
 
     }
 
-    public boolean RemovePatient(String dni) {
+    public boolean removePatient(String dni) {
         Patient[] patients = this.searchPatients(dni, Patient.patientAttributes.DNI);
         if (patients != null && patients.length == 1) {
             if (patients[0].isAllPaid()) {
