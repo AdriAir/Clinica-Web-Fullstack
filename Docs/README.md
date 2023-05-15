@@ -1,16 +1,23 @@
 Reparto de tareas:
 
     - Adrián Borio (Scrum Master):
+        - Soporte y JDBC
 
     - Antonio Cervantes:
+        - Control de Excepciones
 
     - Sandra Román:
+        - Usuario en MySql
+        - Base de datos
 
     - Javier Marrón:
+        - Testing
 
     - Ruben Fernández:
+        - JDBC
 
     - Jose Gómez:
+        - Testing
 
 Resultado y decisiones a tomar en la reuniones SCRUM:
 
