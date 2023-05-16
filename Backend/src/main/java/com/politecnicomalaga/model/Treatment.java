@@ -177,6 +177,7 @@ public class Treatment extends HttpServlet {
             case "insert" -> result = bdAdaptor.insertTreatment(json);
             case "select" -> result = bdAdaptor.selectTreatment(json);
             case "delete" -> result = bdAdaptor.deleteTreatment(json);
+            case "update" -> result = bdAdaptor.updateTreatment(json);
             default -> result = "<p>Parámetro desconocido</p>";
         };
 
