@@ -37,6 +37,7 @@ public class BDAdaptor {
         }
         return connection;
     }
+
     public String getClinics() {
         StringBuilder result = new StringBuilder();
         String cif, name, address, phoneNumber, email;
@@ -106,9 +107,10 @@ public class BDAdaptor {
         if (lastError.isEmpty()) return result.toString();
         else return result + lastError;
     }
+
     public String getPatients() {
         StringBuilder result = new StringBuilder();
-        String dni, name, surname, address, phoneNumber, email, bornDate, clinic;
+        String dni, name, surname, phoneNumber, email, bornDate, clinic;
         Connection connection = null;
         Statement statement = null;
         PreparedStatement preparedStatement = null;
@@ -184,9 +186,12 @@ public class BDAdaptor {
         if (lastError.isEmpty()) return result.toString();
         else return result + lastError;
     }
+
     public String getTreatments() {
-        String result = "";
-        String code, description, date, price, isPaid, patient;
+        StringBuilder result = new StringBuilder();
+        String code, description, date, patientDni;
+        float price;
+        boolean isPaid;
         Connection connection = null;
         Statement statement = null;
         PreparedStatement preparedStatement = null;
@@ -196,11 +201,17 @@ public class BDAdaptor {
 
             //statement = connection.createStatement();
             preparedStatement = connection.prepareStatement("select * from Treatment;");
-
-
-            //ResultSet resultSet = statement.executeQuery("select * from proveedores");
             ResultSet resultSet = preparedStatement.executeQuery();
-
+            result.append("<table>" +
+                    "<tr>" +
+                    "<th>Fila</th>" +
+                    "<th>Código</th>" +
+                    "<th>Descripción</th>" +
+                    "<th>Fecha</th>" +
+                    "<th>Precio</th>" +
+                    "<th>Estado</th>" +
+                    "<th>Paciente (DNI)</th>" +
+                    "</tr>");
             // iteración sobre el resultset
             while (resultSet.next())  //Mientras tengamos rows de salida...
             {
@@ -208,25 +219,40 @@ public class BDAdaptor {
                 code = (resultSet.getString("code"));
                 description = resultSet.getString("description");
                 date = resultSet.getString("date");
-                price = resultSet.getString("price");
-                isPaid = resultSet.getString("isPaid");
-                patient = resultSet.getString("patient");
-
+                price = resultSet.getFloat("price");
+                isPaid = resultSet.getBoolean("isPaid");
+                patientDni = resultSet.getString("patient");
                 // save the results
-                result += "<p>" + code + ";" +
-                        description + ";" +
-                        date + ";" +
-                        price + ";" +
-                        isPaid + ";" +
-                        patient + "</p>\n";
+                result.append("<tr>" + "<th>").
+                        append(rows).
+                        append("</th>").
+                        append("<th>").
+                        append(code).
+                        append("</th>").
+                        append("<th>").
+                        append(description).
+                        append("</th>").
+                        append("<th>").
+                        append(date).
+                        append("</th>").
+                        append("<th>").
+                        append(price).
+                        append("</th>").
+                        append("<th>").
+                        append(isPaid).
+                        append("</th>").
+                        append("<th>").
+                        append(patientDni).
+                        append("</th>").
+                        append("</tr>");
             }
+            result.append("</table>");
         } catch (Exception exception) {
             lastError = lastError + "<p>Error accediendo a la BBDD Select: " + exception.getMessage() + "</p>";
             exception.printStackTrace();
         } finally {
             // Liberamos recursos. Cerramos sentencia y conexión
             try {
-                if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (Exception exception) {
                 lastError = lastError + "<p>Error cerrando la BBDD: " + exception.getMessage() + "</p>";
@@ -234,10 +260,11 @@ public class BDAdaptor {
 
             }
         }
-        result += "\n<p>Rows recogidas: " + rows + "</p>\n";
-        if (lastError.isEmpty()) return result;
+        result.append("\n<p>Rows recogidas: ").append(rows).append("</p>\n");
+        if (lastError.isEmpty()) return result.toString();
         else return result + lastError;
     }
+
     public String insertClinic(String json) {
         String result = "";
         Connection connection = null;
@@ -281,8 +308,9 @@ public class BDAdaptor {
             return result + lastError;
         }
     }
+
     public String insertPatient(String json) {
-        StringBuilder result = new StringBuilder();
+        String result = "";
         Connection connection = null;
         Clinic clinic = FileController.readJson(json);
         PreparedStatement preparedStatement = null;
@@ -301,56 +329,12 @@ public class BDAdaptor {
             preparedStatement.setString(7, clinic.getCif());
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            result.append("<table>" +
-                    "<tr>" +
-                    "<th>Fila</th>" +
-                    "<th>DNI</th>" +
-                    "<th>Nombre</th>" +
-                    "<th>Apellidos</th>" +
-                    "<th>Teléfono</th>" +
-                    "<th>Email</th>" +
-                    "<th>Fecha de Nacimiento</th>" +
-                    "<th>Clinica (CIF)</th>" +
-                    "</tr>");
-            // iteración sobre el resultset
-            while (resultSet.next())  //Mientras tengamos rows de salida...
-            {
-                rows++;
-                dni = (resultSet.getString("cif"));
-                name = resultSet.getString("name");
-                surname = resultSet.getString("surname");
-                phoneNumber = resultSet.getString("phoneNumber");
-                email = resultSet.getString("email");
-                bornDate = resultSet.getString("phoneNumber");
-                clinicCif = resultSet.getString("clinic");
-                // save the results
-                result.append("<tr>" + "<th>").
-                        append(rows).
-                        append("</th>").
-                        append("<th>").
-                        append(dni).
-                        append("</th>").
-                        append("<th>").
-                        append(name).
-                        append("</th>").
-                        append("<th>").
-                        append(surname).
-                        append("</th>").
-                        append("<th>").
-                        append(phoneNumber).
-                        append("</th>").
-                        append("<th>").
-                        append(email).
-                        append("</th>").
-                        append("<th>").
-                        append(bornDate).
-                        append("</th>").
-                        append("<th>").
-                        append(clinicCif).
-                        append("</th>").
-                        append("</tr>");
-            }
-            result.append("</table>");
+            if (preparedStatement.executeUpdate() != 0)
+                result = "<p>Paciente insertada correctamente</p>";
+            else result = "<p>Algo ha salido al insertar la clínica...</p>";
+            //En este caso es una orden hacia la BBDD, y no tenemos
+            //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
+            //que hacer entonces aquí
 
         } catch (Exception exception) {
             lastError = lastError + "<p>Error accediendo a la BBDD Insert: " + exception.getMessage() + "</p>";
@@ -370,6 +354,7 @@ public class BDAdaptor {
         else return result + lastError;
 
     }
+
     public String insertTreatment(String json) {
         String result = "";
         Connection connection = null;
@@ -500,17 +485,25 @@ public class BDAdaptor {
             return result + lastError;
         }
     }
+
     public String selectPatient(String json) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         Connection connection = null;
+        String dni, name, surname, phoneNumber, email, bornDate, clinicCif;
         Clinic clinic = FileController.readJson(json);
         PreparedStatement preparedStatement = null;
-
+        int rows = 0;
         try {
             connection = this.initDatabase();
 
-            //statement = connection.createStatement();
-            preparedStatement = connection.prepareStatement("insert into Patient (dni,name,phoneNumber,email,bornDate,clinic) values (?,?,?,?,?,?,?);");
+            preparedStatement = connection.prepareStatement("select * from Patient " +
+                    "where dni=? " +
+                    "or name like %?% " +
+                    "or surname like %?% " +
+                    "or phoneNumber like %?% " +
+                    "or email like %?% " +
+                    "or bornDate = ? " +
+                    "or clinic = ?;");
             preparedStatement.setString(1, clinic.getPatients()[0].getDni());
             preparedStatement.setString(2, clinic.getPatients()[0].getName());
             preparedStatement.setString(3, clinic.getPatients()[0].getSurname());
@@ -519,13 +512,59 @@ public class BDAdaptor {
             preparedStatement.setString(6, clinic.getPatients()[0].getBornDate());
             preparedStatement.setString(7, clinic.getCif());
 
-
-            if (preparedStatement.executeUpdate() != 0)
-                result = "<p>Proveedor insertado correctamente</p>";
-            else result = "<p>Algo ha salido mal connection la sentencia Select Patient</p>";
-            //En este caso es una orden hacia la BBDD, y no tenemos
-            //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
-            //que hacer entonces aquí
+            //ResultSet = statement.executeQuery("select * from proveedores");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            result = new StringBuilder();
+            result.append("<table>" +
+                    "<tr>" +
+                    "<th>Fila</th>" +
+                    "<th>DNI</th>" +
+                    "<th>Nombre</th>" +
+                    "<th>Apellidos</th>" +
+                    "<th>Teléfono</th>" +
+                    "<th>Email</th>" +
+                    "<th>Fecha de Nacimiento</th>" +
+                    "<th>Clínica (CIF)</th>" +
+                    "</tr>");
+            // iteración sobre el resultset
+            while (resultSet.next())  //Mientras tengamos rows de salida...
+            {
+                rows++;
+                dni = (resultSet.getString("dni"));
+                name = resultSet.getString("name");
+                surname = resultSet.getString("surname");
+                phoneNumber = resultSet.getString("phoneNumber");
+                email = resultSet.getString("email");
+                bornDate = resultSet.getString("bornDate");
+                clinicCif = resultSet.getString("clinicCif");
+                // save the results
+                result.append("<tr>" + "<th>").
+                        append(rows).
+                        append("</th>").
+                        append("<th>").
+                        append(dni).
+                        append("</th>").
+                        append("<th>").
+                        append(name).
+                        append("</th>").
+                        append("<th>").
+                        append(surname).
+                        append("</th>").
+                        append("<th>").
+                        append(phoneNumber).
+                        append("</th>").
+                        append("<th>").
+                        append(email).
+                        append("</th>").
+                        append("<th>").
+                        append(bornDate).
+                        append("</th>").
+                        append("<th>").
+                        append(clinicCif).
+                        append("</th>").
+                        append("</tr>");
+            }
+            result.append("</table>");
 
         } catch (Exception exception) {
             lastError = lastError + "<p>Error accediendo a la BBDD Select: " + exception.getMessage() + "</p>";
@@ -541,35 +580,89 @@ public class BDAdaptor {
 
             }
         }
-        if (lastError.isEmpty()) return result;
+        if (lastError.isEmpty()) return result.toString();
         else return result + lastError;
 
     }
+
     public String selectTreatment(String json) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         Connection connection = null;
+        String code, description, date, patientDni;
+        boolean isPaid;
+        float price;
         Clinic clinic = FileController.readJson(json);
         PreparedStatement preparedStatement = null;
-
+        int rows = 0;
         try {
             connection = this.initDatabase();
 
-            //statement = connection.createStatement();
-            preparedStatement = connection.prepareStatement("insert into Treatment (" +
-                    "code,description,date,price,isPaid,patient) values (?,?,?,?,?,?);");
-            preparedStatement.setString(1, clinic.getPatients()[0].getTreatments()[0].getCode());
-            preparedStatement.setString(2, clinic.getPatients()[0].getTreatments()[0].getDescription());
-            preparedStatement.setString(3, clinic.getPatients()[0].getTreatments()[0].getDate());
-            preparedStatement.setString(4, String.valueOf(clinic.getPatients()[0].getTreatments()[0].getPrice()));
-            preparedStatement.setString(5, String.valueOf(clinic.getPatients()[0].getTreatments()[0].isPaid()));
+            preparedStatement = connection.prepareStatement("select * from Treatment " +
+                    "where code=? " +
+                    "or description like %?% " +
+                    "or date = ? " +
+                    "or price = ? " +
+                    "or isPaid = ? " +
+                    "or patient = ?;");
+            preparedStatement.setString(1, clinic.getPatients()[0].
+                    getTreatments()[0].getCode());
+            preparedStatement.setString(2, clinic.getPatients()[0].
+                    getTreatments()[0].getDescription());
+            preparedStatement.setString(3, clinic.getPatients()[0].
+                    getTreatments()[0].getDate());
+            preparedStatement.setString(4, String.valueOf(clinic.getPatients()[0].
+                    getTreatments()[0].getPrice()));
+            preparedStatement.setString(5, String.valueOf(clinic.getPatients()[0].
+                    getTreatments()[0].isPaid()));
             preparedStatement.setString(6, clinic.getPatients()[0].getDni());
 
-            if (preparedStatement.executeUpdate() != 0)
-                result = "<p>Proveedor insertado correctamente</p>";
-            else result = "<p>Algo ha salido mal connection la sentencia Select Treatment</p>";
-            //En este caso es una orden hacia la BBDD, y no tenemos
-            //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
-            //que hacer entonces aquí
+            //ResultSet = statement.executeQuery("select * from proveedores");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            result.append("<table>" +
+                    "<tr>" +
+                    "<th>Fila</th>" +
+                    "<th>Código</th>" +
+                    "<th>Descripción</th>" +
+                    "<th>Fecha</th>" +
+                    "<th>Precio</th>" +
+                    "<th>Estado</th>" +
+                    "<th>Paciente (DNI)</th>" +
+                    "</tr>");
+            // iteración sobre el resultset
+            while (resultSet.next())  //Mientras tengamos rows de salida...
+            {
+                rows++;
+                code = (resultSet.getString("code"));
+                description = resultSet.getString("description");
+                date = resultSet.getString("date");
+                price = resultSet.getFloat("price");
+                isPaid = resultSet.getBoolean("isPaid");
+                patientDni = resultSet.getString("patient");
+                // save the results
+                result.append("<tr>" + "<th>").
+                        append(rows).
+                        append("</th>").
+                        append("<th>").
+                        append(code).
+                        append("</th>").
+                        append("<th>").
+                        append(description).
+                        append("</th>").
+                        append("<th>").
+                        append(date).
+                        append("</th>").
+                        append("<th>").
+                        append(price).
+                        append("</th>").
+                        append("<th>").
+                        append(isPaid).
+                        append("</th>").
+                        append("<th>").
+                        append(patientDni).
+                        append("</th>").
+                        append("</tr>");
+            }
+            result.append("</table>");
 
         } catch (Exception exception) {
             lastError = lastError + "<p>Error accediendo a la BBDD Select: " + exception.getMessage() + "</p>";
@@ -585,9 +678,10 @@ public class BDAdaptor {
 
             }
         }
-        if (lastError.isEmpty()) return result;
+        if (lastError.isEmpty()) return result.toString();
         else return result + lastError;
     }
+    /*
     public String deleteClinic(String json) {
         String result = "<p>Error al eliminar</p>";
         Connection connection = null;
@@ -625,6 +719,7 @@ public class BDAdaptor {
         else return result + lastError;
 
     }
+
     public String deletePatient(String json) {
         String result = "<p>Error al borrar</p>";
         Connection connection = null;
@@ -664,6 +759,7 @@ public class BDAdaptor {
         else return result + lastError;
 
     }
+
     public String deleteTreatment(String json) {
         String result = "<p>Error al borrar</p>";
         Connection connection = null;
@@ -703,7 +799,14 @@ public class BDAdaptor {
         else return result + lastError;
 
     }
-    public String updateClinic(String json) {}
-    public String updatePatient(String json) {}
-    public String updateTreatment(String json) {}
+
+    public String updateClinic(String json) {
+    }
+
+    public String updatePatient(String json) {
+    }
+
+    public String updateTreatment(String json) {
+    }
+    */
 }

@@ -219,8 +219,8 @@ public class Clinic extends HttpServlet {
             case "all" -> result = bdAdaptor.getClinics();
             case "insert" -> result = bdAdaptor.insertClinic(json);
             case "select" -> result = bdAdaptor.selectClinic(json);
-            case "delete" -> result = bdAdaptor.deleteClinic(json);
-            case "update" -> result = bdAdaptor.updateClinic(json);
+            //case "delete" -> result = bdAdaptor.deleteClinic(json);
+            //case "update" -> result = bdAdaptor.updateClinic(json);
             default -> result = "<p>Parámetro desconocido</p>";
         };
 
