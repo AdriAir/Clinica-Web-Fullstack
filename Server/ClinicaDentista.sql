@@ -75,6 +75,6 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 CREATE USER 'principal'@'%' IDENTIFIED BY '1234';
 
-GRANT SELECT, DELETE, INSERT ON ClinicaDentista.* TO 'principal'@'%';
+GRANT SELECT, DELETE, INSERT, UPDATE ON ClinicaDentista.* TO 'principal'@'%';
 
 FLUSH PRIVILEGES;
