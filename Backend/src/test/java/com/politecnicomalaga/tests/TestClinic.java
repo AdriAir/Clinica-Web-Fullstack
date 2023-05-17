@@ -2,6 +2,8 @@ package com.politecnicomalaga.tests;
 
 import com.politecnicomalaga.model.Clinic;
 import com.politecnicomalaga.model.Patient;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.*;
@@ -21,6 +23,7 @@ public class TestClinic {
 
     @Test
     public void removePatient() {
+        clinic = new Clinic("clinica", "address", "phoneNumber", "email", "cif");
         clinic.addPatient(new Patient("name", "surname", "phone_number", "email", "0", "bornDate"));
         clinic.removePatient("0");
         assertNull(clinic.getPatients());
