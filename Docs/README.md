@@ -7,6 +7,9 @@ Reparto de tareas:
 
     - Antonio Cervantes:
         - Control de Excepciones en todo el modelo
+        - Corrección de problemas:
+            - isAllPaid() devuelve siempre false.
+            - Al buscar por dni devuelve todos los valores que contengan el carácter, es decir, si tenemos un dni que es "23" y otro que es "230", devuelve los dos, cosa que para otros datos está bien, pero para el dni preferimos que devuelva el dato concreto.
 
     - Sandra Román:
         - Usuario en MySql
