@@ -1,28 +1,16 @@
-package com.politecnicomalaga.ClinicTest;
+package com.politecnicomalaga.tests;
 
 import com.politecnicomalaga.model.Clinic;
 import com.politecnicomalaga.model.Patient;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.*;
 
-public class Tester {
+public class TestClinic {
 
     private static Clinic clinic = new Clinic("clinica", "address", "phoneNumber", "email", "cif");
     private static int patientNumber = 500;
 
-    /*
-        @Before
-        public void setUp() throws Exception {
-        }
-        @After
-        public void tearDown() throws Exception {
-            //La reseteamos
-            clinic = new Clinic("clinica", "address", "phoneNumber", "email", "cif");
-        }
-    */
     @Test
     public void addPatient() throws Exception {
         for (int i = 0; i < patientNumber; i++) {
@@ -69,5 +57,12 @@ public class Tester {
 
     @Test
     public void updatePatient() {
+        for (int i = 0; i < patientNumber; i++) {
+            clinic.addPatient(new Patient("name", "surname", "phone_number", "email", String.valueOf(i), "bornDate"));
+        }
+        clinic.updatePatient("5", "928", Patient.patientAttributes.DNI);
+        assertEquals("928", clinic.getPatient("928").getDni());
+        clinic.updatePatient("3", "Manu", Patient.patientAttributes.NAME);
+        assertEquals("Manu", clinic.getPatient("3").getName());
     }
 }
