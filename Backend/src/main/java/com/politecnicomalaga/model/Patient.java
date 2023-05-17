@@ -187,8 +187,7 @@ public class Patient extends HttpServlet {
                 return false;
             }
         }
-
-        return false;
+        return true;
     }
 
     public boolean compare(String field, patientAttributes patientAttributes) {
@@ -196,8 +195,8 @@ public class Patient extends HttpServlet {
         return switch (patientAttributes) {
             case NAME -> this.name.contains(field);
             case SURNAME -> this.surname.contains(field);
-            case DNI -> this.dni.contains(field);
-            case BORN_DATE -> this.bornDate.contains(field);
+            case DNI -> this.dni.equals(field);
+            case BORN_DATE -> this.bornDate.equals(field);
             case EMAIL -> this.email.contains(field);
             case PHONE_NUMBER -> this.phoneNumber.contains(field);
         };
