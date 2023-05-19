@@ -1,0 +1,1 @@
+@REM docker build -t app .
