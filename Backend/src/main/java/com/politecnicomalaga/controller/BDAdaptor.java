@@ -265,49 +265,6 @@ public class BDAdaptor {
         else return result + lastError;
     }
 
-    public String insertClinic(String json) {
-        String result = "";
-        Connection connection = null;
-        Clinic clinic = FileController.readJson(json);
-        PreparedStatement preparedStatement = null;
-
-        try {
-            connection = this.initDatabase();
-            //statement = connection.createStatement();
-            preparedStatement = connection.prepareStatement("insert into Clinic (cif,name,address,phoneNumber,email) values (?,?,?,?,?);");
-            preparedStatement.setString(1, clinic.getCif());
-            preparedStatement.setString(2, clinic.getName());
-            preparedStatement.setString(3, clinic.getAddress());
-            preparedStatement.setString(4, clinic.getPhoneNumber());
-            preparedStatement.setString(5, clinic.getEmail());
-
-            if (preparedStatement.executeUpdate() != 0)
-                result = "<p>Clínica insertada correctamente</p>";
-            else result = "<p>Algo ha salido al insertar la clínica...</p>";
-            //En este caso es una orden hacia la BBDD, y no tenemos
-            //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
-            //que hacer entonces aquí
-
-        } catch (Exception exception) {
-            lastError = lastError + "<p>Error accediendo a la BBDD Insert: " + exception.getMessage() + "</p>";
-            exception.printStackTrace();
-        } finally {
-            // Liberamos recursos. Cerramos sentencia y conexión
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (Exception exception) {
-                lastError = lastError + "<p>Error cerrando la BBDD: " + exception.getMessage() + "</p>";
-                exception.printStackTrace();
-
-            }
-        }
-        if (lastError.isEmpty()) {
-            return result;
-        } else {
-            return result + lastError;
-        }
-    }
 
     public String insertPatient(String json) {
         String result = "";
@@ -319,7 +276,7 @@ public class BDAdaptor {
         try {
             connection = this.initDatabase();
             //statement = connection.createStatement();
-            preparedStatement = connection.prepareStatement("insert into Patient (dni,name,phoneNumber,email,bornDate,clinic) values (?,?,?,?,?,?,?);");
+            preparedStatement = connection.prepareStatement("insert into Patient (dni,name, surname,phoneNumber,email,bornDate,clinic) values (?,?,?,?,?,?,?);");
             preparedStatement.setString(1, clinic.getPatients()[0].getDni());
             preparedStatement.setString(2, clinic.getPatients()[0].getName());
             preparedStatement.setString(3, clinic.getPatients()[0].getSurname());
@@ -681,44 +638,6 @@ public class BDAdaptor {
         if (lastError.isEmpty()) return result.toString();
         else return result + lastError;
     }
-    /*
-    public String deleteClinic(String json) {
-        String result = "<p>Error al eliminar</p>";
-        Connection connection = null;
-        Clinic clinic = FileController.readJson(json);
-        PreparedStatement preparedStatement = null;
-        try {
-            connection = this.initDatabase();
-
-            //statement = connection.createStatement();
-            preparedStatement = connection.prepareStatement("delete from Clinic where cif=?;");
-            preparedStatement.setString(1, clinic.getCif());
-
-            if (preparedStatement.executeUpdate() != 0)
-                result = "<p>Proveedor eliminado correctamente</p>";
-            else result = "<p>Algo ha salido mal al eliminar la clínica</p>";
-            //En este caso es una orden hacia la BBDD, y no tenemos
-            //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
-            //que hacer entonces aquí
-
-        } catch (Exception exception) {
-            lastError = lastError + "<p>Error accediendo a la BBDD Select: " + exception.getMessage() + "</p>";
-            exception.printStackTrace();
-        } finally {
-            // Liberamos recursos. Cerramos sentencia y conexión
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (Exception exception) {
-                lastError = lastError + "<p>Error cerrando la BBDD: " + exception.getMessage() + "</p>";
-                exception.printStackTrace();
-
-            }
-        }
-        if (lastError.isEmpty()) return result;
-        else return result + lastError;
-
-    }
 
     public String deletePatient(String json) {
         String result = "<p>Error al borrar</p>";
@@ -735,8 +654,8 @@ public class BDAdaptor {
 
 
             if (preparedStatement.executeUpdate() != 0)
-                result = "<p>Proveedor insertado correctamente</p>";
-            else result = "<p>Algo ha salido mal connection la sentencia Delete Clinic</p>";
+                result = "<p>Paciente eliminado correctamente</p>";
+            else result = "<p>Algo ha salido mal al eliminar un paciente</p>";
             //En este caso es una orden hacia la BBDD, y no tenemos
             //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
             //que hacer entonces aquí
@@ -775,8 +694,8 @@ public class BDAdaptor {
 
 
             if (preparedStatement.executeUpdate() != 0)
-                result = "<p>Proveedor insertado correctamente</p>";
-            else result = "<p>Algo ha salido mal connection la sentencia Delete Clinic</p>";
+                result = "<p>Tratamiento eliminado correctamente</p>";
+            else result = "<p>Algo ha salido mal al eliminar el tratamiento</p>";
             //En este caso es una orden hacia la BBDD, y no tenemos
             //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
             //que hacer entonces aquí
@@ -801,12 +720,138 @@ public class BDAdaptor {
     }
 
     public String updateClinic(String json) {
+        String result = "";
+        Connection connection = null;
+        Clinic clinic = FileController.readJson(json);
+        PreparedStatement preparedStatement = null;
+        String newCif = "";
+
+        try {
+            connection = this.initDatabase();
+            //statement = connection.createStatement();
+            preparedStatement = connection.prepareStatement("update Clinic set name=?,address=?,phoneNumber=?,email=? where cif=?;");
+            preparedStatement.setString(1, clinic.getCif());
+            preparedStatement.setString(2, clinic.getName());
+            preparedStatement.setString(3, clinic.getAddress());
+            preparedStatement.setString(4, clinic.getPhoneNumber());
+            preparedStatement.setString(5, clinic.getEmail());
+
+            if (preparedStatement.executeUpdate() != 0)
+                result = "<p>Clínica actualizada correctamente</p>";
+            else result = "<p>Algo ha salido al actualizar la clínica...</p>";
+            //En este caso es una orden hacia la BBDD, y no tenemos
+            //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
+            //que hacer entonces aquí
+
+        } catch (Exception exception) {
+            lastError = lastError + "<p>Error accediendo a la BBDD Insert: " + exception.getMessage() + "</p>";
+            exception.printStackTrace();
+        } finally {
+            // Liberamos recursos. Cerramos sentencia y conexión
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (Exception exception) {
+                lastError = lastError + "<p>Error cerrando la BBDD: " + exception.getMessage() + "</p>";
+                exception.printStackTrace();
+
+            }
+        }
+        if (lastError.isEmpty()) {
+            return result;
+        } else {
+            return result + lastError;
+        }
     }
 
     public String updatePatient(String json) {
+        String result = "";
+        Connection connection = null;
+        Clinic clinic = FileController.readJson(json);
+        PreparedStatement preparedStatement = null;
+        String dni, name, surname, phoneNumber, email, bornDate, clinicCif;
+        int rows = 0;
+        try {
+            connection = this.initDatabase();
+            //statement = connection.createStatement();
+            preparedStatement = connection.prepareStatement("update Patient set name=?, surname=?,phoneNumber=?,email=?,bornDate=?,clinic=? where dni=?;");
+            preparedStatement.setString(1, clinic.getPatients()[0].getDni());
+            preparedStatement.setString(2, clinic.getPatients()[0].getName());
+            preparedStatement.setString(3, clinic.getPatients()[0].getSurname());
+            preparedStatement.setString(4, clinic.getPatients()[0].getPhoneNumber());
+            preparedStatement.setString(5, clinic.getPatients()[0].getEmail());
+            preparedStatement.setString(6, clinic.getPatients()[0].getBornDate());
+            preparedStatement.setString(7, clinic.getCif());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (preparedStatement.executeUpdate() != 0)
+                result = "<p>Paciente actualizar correctamente</p>";
+            else result = "<p>Algo ha salido al actualizar el paciente...</p>";
+            //En este caso es una orden hacia la BBDD, y no tenemos
+            //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
+            //que hacer entonces aquí
+
+        } catch (Exception exception) {
+            lastError = lastError + "<p>Error accediendo a la BBDD Insert: " + exception.getMessage() + "</p>";
+            exception.printStackTrace();
+        } finally {
+            // Liberamos recursos. Cerramos sentencia y conexión
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (Exception exception) {
+                lastError = lastError + "<p>Error cerrando la BBDD: " + exception.getMessage() + "</p>";
+                exception.printStackTrace();
+
+            }
+        }
+        if (lastError.isEmpty()) return result.toString();
+        else return result + lastError;
+
     }
 
     public String updateTreatment(String json) {
+        String result = "";
+        Connection connection = null;
+        Clinic clinic = FileController.readJson(json);
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = this.initDatabase();
+
+            //statement = connection.createStatement();
+            preparedStatement = connection.prepareStatement("update Treatment set description=?,date=?,price=?,isPaid=?,patient=? where code=?;");
+            preparedStatement.setString(1, clinic.getPatients()[0].getTreatments()[0].getCode());
+            preparedStatement.setString(2, clinic.getPatients()[0].getTreatments()[0].getDescription());
+            preparedStatement.setString(3, clinic.getPatients()[0].getTreatments()[0].getDate());
+            preparedStatement.setString(4, String.valueOf(clinic.getPatients()[0].getTreatments()[0].getPrice()));
+            preparedStatement.setString(5, String.valueOf(clinic.getPatients()[0].getTreatments()[0].isPaid()));
+            preparedStatement.setString(6, clinic.getPatients()[0].getDni());
+
+
+            if (preparedStatement.executeUpdate() != 0)
+                result = "<p>Tratamiento actualizado correctamente</p>";
+            else result = "<p>Algo ha salido mal connection la sentencia Update Treatment</p>";
+            //En este caso es una orden hacia la BBDD, y no tenemos
+            //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
+            //que hacer entonces aquí
+
+        } catch (Exception exception) {
+            lastError = lastError + "<p>Error accediendo a la BBDD Insert: " + exception.getMessage() + "</p>";
+            exception.printStackTrace();
+        } finally {
+            // Liberamos recursos. Cerramos sentencia y conexión
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (Exception exception) {
+                lastError = lastError + "<p>Error cerrando la BBDD: " + exception.getMessage() + "</p>";
+                exception.printStackTrace();
+
+            }
+        }
+        if (lastError.isEmpty()) return result;
+        else return result + lastError;
+
     }
-    */
 }

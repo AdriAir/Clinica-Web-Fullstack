@@ -36,7 +36,7 @@ public class Clinic extends HttpServlet {
 
     public Clinic(String csv) {
         String[] lines = csv.split("\n");
-        //Me vendrá una línea mínimo para clinica
+        //Me vendrá una línea minimo para clinica
         String[] attributes = lines[0].split(";");
         if (attributes[0].equals("Clinica")) {
             this.name = attributes[1];
@@ -217,10 +217,8 @@ public class Clinic extends HttpServlet {
 
         result = switch (petitionRequested) {
             case "all" -> result = bdAdaptor.getClinics();
-            case "insert" -> result = bdAdaptor.insertClinic(json);
             case "select" -> result = bdAdaptor.selectClinic(json);
-            //case "delete" -> result = bdAdaptor.deleteClinic(json);
-            //case "update" -> result = bdAdaptor.updateClinic(json);
+            case "update" -> result = bdAdaptor.updateClinic(json);
             default -> result = "<p>Parámetro desconocido</p>";
         };
 
