@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `ClinicaDentista`.`Treatment` (
   `description` VARCHAR(100) NOT NULL,
   `date` DATE NOT NULL,
   `price` DECIMAL(10,2) NOT NULL,
-  `isPaid` BOOLEAN NOT NULL,
+  `isPaid` BOOLEAN NOT NULL DEFAULT FALSE,
   `patient` VARCHAR(9) NOT NULL,
   PRIMARY KEY (`code`),
   UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE,
