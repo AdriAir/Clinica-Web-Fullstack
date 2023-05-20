@@ -9,7 +9,7 @@
     docker-compose up -d
 
     REM Copiamos los scripts .sql a la base de datos y los ejecutamos
-    docker cp mysql\*.sql docker-bbbdd-1:/*.sql
+    docker cp mysql\*.sql docker-bbdd-1:/*.sql
     docker exec -it docker-bbdd-1 mysql -u root -p
 
     REM password: secretone
