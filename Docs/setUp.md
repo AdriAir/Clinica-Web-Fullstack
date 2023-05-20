@@ -27,7 +27,7 @@
 7. Abrimos una nueva terminal en la raiz del repositorio y ejecutamos los siguientes comandos:
     ```batch
     REM Copiamos la app a tomcat
-    docker cp -R Frontend\webapp docker-servidorweb-1:/usr/local/tomcat/webapps/
+    docker cp Frontend\webapp docker-servidorweb-1:/usr/local/tomcat/webapps/
 
     REM Copiamos los archivos de usuario y configuración a tomcat
     docker cp Server\tomcat\tomcat-users.xml docker-servidorweb-1:/usr/local/tomcat/conf/tomcat-users.xml
