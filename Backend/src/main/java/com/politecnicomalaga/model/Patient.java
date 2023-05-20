@@ -289,8 +289,8 @@ public class Patient extends HttpServlet {
             case "all" -> result = bdAdaptor.getPatients();
             case "insert" -> result = bdAdaptor.insertPatient(json);
             case "select" -> result = bdAdaptor.selectPatient(json);
-            //case "delete" -> result = bdAdaptor.deletePatient(json);
-            //case "update" -> result = bdAdaptor.updatePatient(json);
+            case "delete" -> result = bdAdaptor.deletePatient(json);
+            case "update" -> result = bdAdaptor.updatePatient(json);
             default -> result = "<p>Parámetro desconocido</p>";
         };
 
