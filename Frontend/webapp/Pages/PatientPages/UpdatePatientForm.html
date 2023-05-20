@@ -1,0 +1,20 @@
+<h2>Modificar datos de un paciente</h2>
+
+<div>
+    <p>Introduzca el DNI del paciente: <input type="text" name="campoDni" required></p>
+</div>
+
+<!-- Se mostrará si existe un paciente con ese dni -->
+<p>Introduzca los nuevos datos del paciente</p>
+<form>
+    <p>Nombre: <input type="text" name="campoName" required></p>
+    <p>Apellidos: <input type="text" name="campoSurname" required></p>
+    <p>Número de teléfono: <input type="text" name="campoPhoneNumber" required></p>
+    <p>Email: <input type="text" name="campoEmail" required></p>
+    <p>Fecha de nacimiento: <input type="date" name="campoBornDate" required></p>
+</form>
+
+<!-- Si no -->
+<div>
+    <p>No existe un paciente con ese DNI</p>
+</div>

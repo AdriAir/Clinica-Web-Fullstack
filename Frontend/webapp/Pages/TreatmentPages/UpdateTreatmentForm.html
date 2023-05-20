@@ -1,0 +1,20 @@
+<h2>Modificar datos de un tratamiento</h2>
+<div>
+    <p>Introduzca el DNI del paciente: <input type="text" name="campoDni" required></p>
+</div>
+
+<!-- Esto solo se mostrará al pulsar el boton y encontrar un cliente con ese dni -->
+<div>
+    <p>Introduzca los nuevos datos del tratamiento</p>
+    <form>
+        <p>Código: <input type="text" name="campoCode" required></p>
+        <p>Descripción: <input type="text" name="campoDescription" required></p>
+        <p>Fecha: <input type="date" name="campoDate" required></p>
+        <p>Precio: <input type="number" name="campoPrice" min="1" step="0.01" required></p>
+    </form>
+</div>
+
+<!-- Si no -->
+<div>
+    <p>No existe un paciente con ese DNI</p>
+</div>
