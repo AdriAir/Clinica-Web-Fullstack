@@ -17,7 +17,7 @@
                 <configuration>
                     <warName>app</warName>
                     <!-- Opcional: Especifica un directorio de destino personalizado -->
-                    <outputDirectory>src/main/webapp</outputDirectory>
+                    <outputDirectory>..\Frontend\webapp\</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
