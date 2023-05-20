@@ -4,7 +4,7 @@
 2. Instalamos la aplicación de Docker para Windows y reiniciamos el equipo
 3. Abrimos la terminal en la raiz del repositorio y ejecutamos los siguientes comandos:
     ```batch
-    REM Creamos los contenedores mediante el archivo .yml si no existen
+    REM Creamos los contenedores mediante el archivo .yml si no existen. SI TENEMOS EL PUERTO 3306, 8080 o 8081 usando, hay que detenerlos para continuar
     cd Server\Docker
     docker-compose up -d
 

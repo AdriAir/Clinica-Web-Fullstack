@@ -14,6 +14,7 @@ Reparto de tareas:
     - Sandra Román:
         - Usuario en MySql
         - Base de datos
+        - BDAdaptor
 
     - Javier Marrón:
         - Test del modelo completo
@@ -23,6 +24,7 @@ Reparto de tareas:
 
     - Jose Gómez:
         - Testing: Testing de la Clínica
+        - BDAdaptor
 
 Resultado y decisiones a tomar en la reuniones SCRUM:
 
