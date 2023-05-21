@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+
+<head>
+    <title>ClínicaDentista</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/Scripts/selects.js"></script>
+</head>
+
+<body>
+    <h1>Base de Datos: ClínicaDentista</h1>
+    <form id="formulary">
+        <p>Seleccione lo que quiere hacer:
+            <select id="optionSelect" name="option" onchange="updateTableOptions()">
+                <option>Seleccionar todos los registros</option>
+                <option>Seleccionar un registro</option>
+                <option>Actualizar</option>
+                <option>Añadir</option>
+                <option>Borrar</option>
+            </select>
+        </p>
+        <p>Seleccione una tabla:
+            <select id="tableSelect" name="table">
+                <option>Paciente</option>
+                <option>Tratamiento</option>
+                <option>Clinica</option>
+            </select>
+        </p>
+    </form>
+    <button id="boton1">Aceptar</button>
+    <div id="page">
+
+    </div>
+</body>
+
+</html>
