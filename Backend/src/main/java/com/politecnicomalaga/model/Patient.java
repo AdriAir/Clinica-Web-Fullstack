@@ -1,19 +1,8 @@
 package com.politecnicomalaga.model;
 
-import com.politecnicomalaga.controller.BDAdaptor;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet("/Paciente")
-
-public class Patient extends HttpServlet {
+public class Patient {
     public enum patientAttributes {NAME, SURNAME, DNI, BORN_DATE, PHONE_NUMBER, EMAIL};
     private String name;
     private String surname;
@@ -262,107 +251,4 @@ public class Patient extends HttpServlet {
         }
         return result.toString();
     }
-
-    //HTTP SERVLET
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        String petitionRequested = request.getParameter("petition");
-        String json = request.getParameter("data");
-
-        response.setContentType("text/html;charset=UTF-8");
-
-        String result = "";
-        BDAdaptor bdAdaptor = new BDAdaptor();
-
-        result = switch (petitionRequested) {
-            case "all" -> result = bdAdaptor.getPatients();
-            case "insert" -> result = bdAdaptor.insertPatient(json);
-            case "select" -> result = bdAdaptor.selectPatient(json);
-            case "delete" -> result = bdAdaptor.deletePatient(json);
-            case "update" -> result = bdAdaptor.updatePatient(json);
-            default -> result = "<p>Parámetro desconocido</p>";
-        };
-
-        try (PrintWriter printWriter = response.getWriter()) {
-
-            printWriter.println("<!DOCTYPE html>\n" +
-                    "<html>\n" +
-                    "<head>\n" +
-                    "<title>Get Paciente Resultados</title>\n" +
-                    "<meta charset=\"UTF-8\">\n" +
-                    "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                    "<style>\n" +
-                    "* {" +
-                    "color: white;" +
-                    "}" +
-                    "body {" +
-                    "display: flex;" +
-                    "justify-content: center;" +
-                    "align-items: center;" +
-                    "background-color: black;\n" +
-                    "}" +
-                    "table {" +
-                    "border: 2px solid white;" +
-                    "}" +
-                    "<style>\n" +
-                    "</head>\n" +
-                    "<body>\n" +
-                    result +
-                    "</body>\n" +
-                    "</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request  servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "BackEnd TrabajoTaller Servlet";
-    }// </editor-fold>
-
-
 }

@@ -209,7 +209,7 @@ public class Clinic extends HttpServlet {
             throws ServletException, IOException {
 
         String petitionRequested = request.getParameter("petition");
-        String json = request.getParameter("data");
+        String data = request.getParameter("data");
 
         response.setContentType("text/html;charset=UTF-8");
 
@@ -217,9 +217,11 @@ public class Clinic extends HttpServlet {
         BDAdaptor bdAdaptor = new BDAdaptor();
 
         result = switch (petitionRequested) {
-            case "all" -> result = bdAdaptor.getClinics();
-            case "select" -> result = bdAdaptor.selectClinic(json);
-            case "update" -> result = bdAdaptor.updateClinic(json);
+            case "listaPacientes" -> result = bdAdaptor.listPatients(data); //Apellidos
+            case "listaTratamientos" -> result = bdAdaptor.listTreatments(data); //Dni
+            case "insertarPaciente" -> result = bdAdaptor.insertPatient(data); //JsonPatient
+            case "insertarTratamiento" -> result = bdAdaptor.insertTreatment(data); //JsonTreatment
+            case "cobraTratamiento" -> result = bdAdaptor.chargeTreatment(data); //treatmentCode;PatientDni
             default -> result = "<p>Parámetro desconocido</p>";
         };
 
@@ -254,14 +256,13 @@ public class Clinic extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -272,10 +273,10 @@ public class Clinic extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -290,7 +291,7 @@ public class Clinic extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "BackEnd TrabajoTaller Servlet";
+        return "BackEnd Clinica Servlet";
     }// </editor-fold>
 
 }
