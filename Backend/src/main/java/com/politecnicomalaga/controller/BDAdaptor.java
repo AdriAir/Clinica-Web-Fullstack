@@ -32,7 +32,7 @@ public class BDAdaptor {
             Class.forName(dbDriver);
             connection = DriverManager.getConnection(dbURL + dbName, dbUsername, dbPassword);
         } catch (Exception exception) {
-            lastError = lastError + "<p>Error conectando a la BBDD: " + exception.getMessage() + "</p>";
+            lastError = lastError + "<br><p>Error conectando a la BBDD: " + exception.getMessage() + "</p><br>";
             exception.printStackTrace();
         }
         return connection;
@@ -53,7 +53,7 @@ public class BDAdaptor {
             //ResultSet = statement.executeQuery("select * from proveedores");
             ResultSet resultSet = preparedStatement.executeQuery();
             result = new StringBuilder();
-            result.append("<table>" +
+            result.append("<br><table>" +
                     "<tr>" +
                     "<th>Fila</th>" +
                     "<th>DNI</th>" +
@@ -102,14 +102,14 @@ public class BDAdaptor {
             }
             result.append("</table>");
         } catch (Exception exception) {
-            lastError = lastError + "<p>Error accediendo a la BBDD Select: " + exception.getMessage() + "</p>";
+            lastError = lastError + "<br><p>Error accediendo a la BBDD Select: " + exception.getMessage() + "</p><br>";
             exception.printStackTrace();
         } finally {
             // Liberamos recursos. Cerramos sentencia y conexión
             try {
                 if (connection != null) connection.close();
             } catch (Exception exception) {
-                lastError = lastError + "<p>Error cerrando la BBDD: " + exception.getMessage() + "</p>";
+                lastError = lastError + "<br><p>Error cerrando la BBDD: " + exception.getMessage() + "</p><br>";
                 exception.printStackTrace();
             }
         }
@@ -134,7 +134,7 @@ public class BDAdaptor {
             preparedStatement = connection.prepareStatement("select * from Treatment where dni = ?;");
             preparedStatement.setString(1, dni);
             ResultSet resultSet = preparedStatement.executeQuery();
-            result.append("<table>" +
+            result.append("<br><table>" +
                     "<tr>" +
                     "<th>Fila</th>" +
                     "<th>Código</th>" +
@@ -180,19 +180,19 @@ public class BDAdaptor {
             }
             result.append("</table>");
         } catch (Exception exception) {
-            lastError = lastError + "<p>Error accediendo a la BBDD Select: " + exception.getMessage() + "</p>";
+            lastError = lastError + "<br><p>Error accediendo a la BBDD Select: " + exception.getMessage() + "</p><br>";
             exception.printStackTrace();
         } finally {
             // Liberamos recursos. Cerramos sentencia y conexión
             try {
                 if (connection != null) connection.close();
             } catch (Exception exception) {
-                lastError = lastError + "<p>Error cerrando la BBDD: " + exception.getMessage() + "</p>";
+                lastError = lastError + "<br><p>Error cerrando la BBDD: " + exception.getMessage() + "</p><br>";
                 exception.printStackTrace();
 
             }
         }
-        result.append("\n<p>Rows recogidas: ").append(rows).append("</p>\n");
+        result.append("\n<br><p>Rows recogidas: ").append(rows).append("</p><br>");
         if (lastError.isEmpty()) return result.toString();
         else return result + lastError;
     }
@@ -218,14 +218,14 @@ public class BDAdaptor {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (preparedStatement.executeUpdate() != 0)
-                result = "<p>Paciente insertada correctamente</p>";
-            else result = "<p>Algo ha salido al insertar la clínica...</p>";
+                result = "<br><p>Paciente insertada correctamente</p><br>";
+            else result = "<br><p>Algo ha salido al insertar la clínica...</p><br>";
             //En este caso es una orden hacia la BBDD, y no tenemos
             //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
             //que hacer entonces aquí
 
         } catch (Exception exception) {
-            lastError = lastError + "<p>Error accediendo a la BBDD Insert: " + exception.getMessage() + "</p>";
+            lastError = lastError + "<br><p>Error accediendo a la BBDD Insert: " + exception.getMessage() + "</p><br>";
             exception.printStackTrace();
         } finally {
             // Liberamos recursos. Cerramos sentencia y conexión
@@ -233,7 +233,7 @@ public class BDAdaptor {
                 if (preparedStatement != null) preparedStatement.close();
                 if (connection != null) connection.close();
             } catch (Exception exception) {
-                lastError = lastError + "<p>Error cerrando la BBDD: " + exception.getMessage() + "</p>";
+                lastError = lastError + "<br><p>Error cerrando la BBDD: " + exception.getMessage() + "</p><br>";
                 exception.printStackTrace();
 
             }
@@ -263,14 +263,14 @@ public class BDAdaptor {
 
 
             if (preparedStatement.executeUpdate() != 0)
-                result = "<p>Tratamiento insertado correctamente</p>";
-            else result = "<p>Algo ha salido mal connection la sentencia Insert Treatment</p>";
+                result = "<br><p>Tratamiento insertado correctamente</p><br>";
+            else result = "<br><p>Algo ha salido mal connection la sentencia Insert Treatment</p><br>";
             //En este caso es una orden hacia la BBDD, y no tenemos
             //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
             //que hacer entonces aquí
 
         } catch (Exception exception) {
-            lastError = lastError + "<p>Error accediendo a la BBDD Insert: " + exception.getMessage() + "</p>";
+            lastError = lastError + "<br><p>Error accediendo a la BBDD Insert: " + exception.getMessage() + "</p><br>";
             exception.printStackTrace();
         } finally {
             // Liberamos recursos. Cerramos sentencia y conexión
@@ -278,7 +278,7 @@ public class BDAdaptor {
                 if (preparedStatement != null) preparedStatement.close();
                 if (connection != null) connection.close();
             } catch (Exception exception) {
-                lastError = lastError + "<p>Error cerrando la BBDD: " + exception.getMessage() + "</p>";
+                lastError = lastError + "<br><p>Error cerrando la BBDD: " + exception.getMessage() + "</p><br>";
                 exception.printStackTrace();
 
             }
@@ -308,17 +308,17 @@ public class BDAdaptor {
 
             if (preparedStatement.executeUpdate() != 0)
                 if (clinic.getPatients()[0].getTreatments()[0].isPaid()){
-                    result = "<p>Tratamiento cobrado correctamente</p>";
+                    result = "<br><p>Tratamiento cobrado correctamente</p><br>";
                 } else {
-                    result = "<p>El tratamiento no se ha podido cobrar</p>";
+                    result = "<br><p>El tratamiento no se ha podido cobrar</p><br>";
                 }
-            else result = "<p>Algo ha salido mal connection la sentencia Update Treatment</p>";
+            else result = "<br><p>Algo ha salido mal connection la sentencia Update Treatment</p><br>";
             //En este caso es una orden hacia la BBDD, y no tenemos
             //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
             //que hacer entonces aquí
 
         } catch (Exception exception) {
-            lastError = lastError + "<p>Error accediendo a la BBDD Insert: " + exception.getMessage() + "</p>";
+            lastError = lastError + "<br><p>Error accediendo a la BBDD Insert: " + exception.getMessage() + "</p><br>";
             exception.printStackTrace();
         } finally {
             // Liberamos recursos. Cerramos sentencia y conexión
@@ -326,7 +326,7 @@ public class BDAdaptor {
                 if (preparedStatement != null) preparedStatement.close();
                 if (connection != null) connection.close();
             } catch (Exception exception) {
-                lastError = lastError + "<p>Error cerrando la BBDD: " + exception.getMessage() + "</p>";
+                lastError = lastError + "<br><p>Error cerrando la BBDD: " + exception.getMessage() + "</p><br>";
                 exception.printStackTrace();
 
             }
