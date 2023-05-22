@@ -22,17 +22,16 @@ public class BDAdaptor {
         // Initialize all the information regarding
         // Database Connection
         String dbDriver = "com.mysql.jdbc.Driver";
-        String dbURL = "jdbc:mysql://localhost:3306/";
+        String dbURL = "jdbc:mysql://localhost:3306/ClinicaDentista";
         // Database name to access
-        String dbName = "ClinicaDentista";
-        String dbUsername = "principal";
-        String dbPassword = "1234";
+        String dbUsername = "root";
+        String dbPassword = "secretone";
 
         try {
             Class.forName(dbDriver);
-            connection = DriverManager.getConnection(dbURL + dbName, dbUsername, dbPassword);
+            connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
         } catch (Exception exception) {
-            lastError = lastError + "<br><p>Error conectando a la BBDD: " + exception.getMessage() + "</p><br>";
+            lastError = lastError + "</br><p>Error conectando a la BBDD: " + exception.getMessage() + "</p><br>";
             exception.printStackTrace();
         }
         return connection;
@@ -48,8 +47,9 @@ public class BDAdaptor {
         try {
             connection = this.initDatabase();
             //statement = connection.createStatement();
-            preparedStatement = connection.prepareStatement("select * from Patient where surname like %?%;");
-            preparedStatement.setString(1, apellidos);
+            preparedStatement = connection.prepareStatement("select * from Patient where surname like ?;");
+            preparedStatement.setString(1, "%" + apellidos + "%");
+
             //ResultSet = statement.executeQuery("select * from proveedores");
             ResultSet resultSet = preparedStatement.executeQuery();
             result = new StringBuilder();
@@ -108,6 +108,7 @@ public class BDAdaptor {
             // Liberamos recursos. Cerramos sentencia y conexión
             try {
                 if (connection != null) connection.close();
+                if (preparedStatement != null) preparedStatement.close();
             } catch (Exception exception) {
                 lastError = lastError + "<br><p>Error cerrando la BBDD: " + exception.getMessage() + "</p><br>";
                 exception.printStackTrace();
@@ -133,6 +134,7 @@ public class BDAdaptor {
             //statement = connection.createStatement();
             preparedStatement = connection.prepareStatement("select * from Treatment where dni = ?;");
             preparedStatement.setString(1, dni);
+
             ResultSet resultSet = preparedStatement.executeQuery();
             result.append("<br><table>" +
                     "<tr>" +
@@ -186,6 +188,7 @@ public class BDAdaptor {
             // Liberamos recursos. Cerramos sentencia y conexión
             try {
                 if (connection != null) connection.close();
+                if (preparedStatement != null) preparedStatement.close();
             } catch (Exception exception) {
                 lastError = lastError + "<br><p>Error cerrando la BBDD: " + exception.getMessage() + "</p><br>";
                 exception.printStackTrace();
