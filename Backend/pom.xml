@@ -16,8 +16,6 @@
                 <version>3.3.2</version>
                 <configuration>
                     <warName>app</warName>
-                    <!-- Opcional: Especifica un directorio de destino personalizado -->
-                    <outputDirectory>..\Frontend\webapp\</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>

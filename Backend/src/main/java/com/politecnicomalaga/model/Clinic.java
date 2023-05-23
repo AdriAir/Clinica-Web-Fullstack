@@ -1,7 +1,5 @@
 package com.politecnicomalaga.model;
 
-import com.politecnicomalaga.controller.BDAdaptor;
-
 import java.util.ArrayList;
 
 

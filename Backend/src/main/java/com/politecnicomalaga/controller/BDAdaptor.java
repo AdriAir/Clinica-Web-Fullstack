@@ -2,11 +2,7 @@ package com.politecnicomalaga.controller;
 
 import com.politecnicomalaga.model.Clinic;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class BDAdaptor {
     private String lastError;
@@ -223,8 +219,8 @@ public class BDAdaptor {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (preparedStatement.executeUpdate() != 0)
-                result = "<br><p>Paciente insertada correctamente</p><br>";
-            else result = "<br><p>Algo ha salido al insertar la clínica...</p><br>";
+                result = "<br><p>Paciente insertado correctamente</p><br>";
+            else result = "<br><p>Algo ha salido al insertar el paciente...</p><br>";
             //En este caso es una orden hacia la BBDD, y no tenemos
             //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
             //que hacer entonces aquí

@@ -4,8 +4,6 @@ import com.politecnicomalaga.controller.FileController;
 import com.politecnicomalaga.model.Clinic;
 import com.politecnicomalaga.model.Patient;
 import com.politecnicomalaga.model.Treatment;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
