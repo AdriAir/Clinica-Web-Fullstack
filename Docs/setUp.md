@@ -26,8 +26,6 @@
 6. Ejecutamos el contenedor principal "docker" haciendo click en el botón de play, situado a la derecha
 7. Abrimos una nueva terminal en la raiz del repositorio y ejecutamos los siguientes comandos:
     ```batch
-    REM Copiamos la app a tomcat
-    REM (lo hacemos desde la web gráfica) docker cp Frontend\webapp docker-servidorweb-1:/usr/local/tomcat/webapps/
 
     REM Copiamos los archivos de usuario y configuración a tomcat
     docker cp Server\tomcat\tomcat-users.xml docker-servidorweb-1:/usr/local/tomcat/conf/tomcat-users.xml
@@ -48,6 +46,7 @@
     User: "admin"
     Password: "admin"
 
-10. Comprobamos que "/webapp" está ejecutandose
-11. Entramos en http://localhost:8080/webapp/
-12. Si todo ha ido bien, debe aparecer "TODO write content"
+10. Desplegamos el .war
+11. Copiamos el resto de contenidos de la carpeta Frontend/webapp en la ruta de tomcat/webapps/app/ (DEBEMOS PARAR LA EJECUCIÓN DE LA APP ANTES)
+12. Entramos en http://localhost:8080/app/
+13. Si todo ha ido bien, debe aparecer el formulario

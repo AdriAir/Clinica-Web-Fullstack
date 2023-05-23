@@ -4,6 +4,7 @@ Reparto de tareas:
         - Soporte y JDBC: Modificación de Clases (métodos para SQL y Servlet)
         - BDAdaptor: Formato de las tablas para HTML
         - Docker SetUp (TomCat Web Server && MySql Server && phpMyAdmin)
+        - Finalización del Frontend con Bootsrap5 y ultimos detalles
 
     - Antonio Cervantes:
         - Control de Excepciones en todo el modelo

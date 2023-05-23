@@ -23,6 +23,12 @@ CREATE TABLE IF NOT EXISTS `ClinicaDentista`.`Clinic` (
   PRIMARY KEY (`cif`))
 ENGINE = InnoDB;
 
+--
+-- Volcado de datos para la tabla `Clinic`
+--
+
+INSERT INTO `Clinic` (`cif`, `name`, `address`, `phoneNumber`, `email`) VALUES
+('3213212J', 'Clinica DAW', 'Calle Marmoles 23', '6263728934', 'daw.clinica@gmail.com');
 
 -- -----------------------------------------------------
 -- Table `ClinicaDentista`.`Patient`
@@ -69,3 +75,4 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+

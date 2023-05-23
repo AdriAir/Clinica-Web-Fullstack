@@ -22,16 +22,16 @@ public class BDAdaptor {
         // Initialize all the information regarding
         // Database Connection
         String dbDriver = "com.mysql.jdbc.Driver";
-        String dbURL = "jdbc:mysql://localhost:3306/ClinicaDentista";
+        String dbURL = "jdbc:mysql://bbdd:3306/ClinicaDentista";
         // Database name to access
-        String dbUsername = "root";
-        String dbPassword = "secretone";
+        String dbUsername = "principal";
+        String dbPassword = "1234";
 
         try {
             Class.forName(dbDriver);
             connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
         } catch (Exception exception) {
-            lastError = lastError + "</br><p>Error conectando a la BBDD: " + exception.getMessage() + "</p><br>";
+            lastError = lastError + "<br><p>Error conectando a la BBDD: " + exception.getMessage() + "</p><br>";
             exception.printStackTrace();
         }
         return connection;
@@ -203,6 +203,8 @@ public class BDAdaptor {
     public String insertPatient(String json) {
         String result = "";
         Connection connection = null;
+        json = json.replaceAll("%22", "'");
+        json = json.replaceAll("%20", " ");
         Clinic clinic = FileController.readJson(json);
         PreparedStatement preparedStatement = null;
         String dni, name, surname, phoneNumber, email, bornDate, clinicCif;
@@ -249,6 +251,8 @@ public class BDAdaptor {
     public String insertTreatment(String json) {
         String result = "";
         Connection connection = null;
+        json = json.replaceAll("%22", "'");
+        json = json.replaceAll("%20", " ");
         Clinic clinic = FileController.readJson(json);
         PreparedStatement preparedStatement = null;
 
@@ -291,30 +295,24 @@ public class BDAdaptor {
 
     }
 
-    public String chargeTreatment(String json) {
+    public String chargeTreatment(String data) {
         String result = "";
         Connection connection = null;
-        Clinic clinic = FileController.readJson(json);
+        String code = data.split(";")[0];
+        String dni = data.split(";")[1];
         PreparedStatement preparedStatement = null;
-        clinic.getPatients()[0].getTreatments()[0].charge();
 
         try {
             connection = this.initDatabase();
 
             //statement = connection.createStatement();
-            preparedStatement = connection.prepareStatement("update Treatment set isPaid=? where patient=? and code=?;");
-            preparedStatement.setString(1, String.valueOf(clinic.getPatients()[0].getTreatments()[0].isPaid()));
-            preparedStatement.setString(2, clinic.getPatients()[0].getDni());
-            preparedStatement.setString(3, clinic.getPatients()[0].getTreatments()[0].getCode());
-
+            preparedStatement = connection.prepareStatement("update Treatment set isPaid=true where patient=? and code=?;");
+            preparedStatement.setString(1, dni);
+            preparedStatement.setString(2, code);
 
 
             if (preparedStatement.executeUpdate() != 0)
-                if (clinic.getPatients()[0].getTreatments()[0].isPaid()){
-                    result = "<br><p>Tratamiento cobrado correctamente</p><br>";
-                } else {
-                    result = "<br><p>El tratamiento no se ha podido cobrar</p><br>";
-                }
+                result = "<br><p>Tratamiento cobrado correctamente</p><br>";
             else result = "<br><p>Algo ha salido mal connection la sentencia Update Treatment</p><br>";
             //En este caso es una orden hacia la BBDD, y no tenemos
             //ResultSet para iterar, las cosas pueden ir bien, o mal, nada más
