@@ -1,33 +1,91 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
-<html>
+<!doctype html>
+<html lang="es">
 
 <head>
-    <title>ClínicaDentista</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/Scripts/selects.js"></script>
+    <title>Clínica Dentista</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="Styles/global.css">
 </head>
 
 <body>
     <h1>Base de Datos: ClínicaDentista</h1>
-    <form id="formulary">
-        <p>Seleccione lo que quiere hacer:
-            <select id="optionSelect" name="option">
-                <option>Añadir Paciente</option>
-                <option>Listar Pacientes</option>
-                <option>Añadir Tratamiento</option>
-                <option>Listar Tratamientos</option>
-                <option>Cobrar un Tratamiento</option>
-            </select>
-    </form>
-    <button id="boton1">Aceptar</button>
-    <div id="page">
-
+    <div class="mb-3">
+        <label for="" class="form-label">Seleccione una opcción</label>
+        <select class="form-select form-select-lg" name="options" id="optionSelect" onchange="javascript:buildPage()">
+            <option value="" selected disabled hidden>Selecciona una opción</option>
+            <option value="addPatient">Añadir Paciente</option>
+            <option value="listPatients">Listar Pacientes</option>
+            <option value="addTreatment">Añadir Tratamiento</option>
+            <option value="listTreatments">Listar Tratamientos</option>
+            <option value="chargeTreatment">Cobrar un Tratamiento</option>
+        </select>
     </div>
+
+    <div id="page">
+        <div id="addPatient">
+            <br>
+            <h2>Añadir Paciente</h2>
+            <br>
+            <p>Introduzca los datos del nuevo paciente</p>
+
+            <div class="mb-3">
+                <label for="" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                <label for="" class="form-label">Apellidos</label>
+                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                <label for="" class="form-label">Número de teléfono</label>
+                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                <label for="" class="form-label">Email</label>
+                <input type="email" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                <label for="" class="form-label">DNI</label>
+                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                <label for="" class="form-label">Fecha de nacimiento</label>
+                <input type="date" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+            </div>
+        </div>
+        <div id="listPatients">
+            <br>
+            <h2>Listar Pacientes</h2>
+            <br>
+        </div>
+        <div id="addTreatment">
+            <br>
+            <h2>Añadir Tratamiento</h2>
+            <br>
+            <p>Introduzca los datos del nuevo tratamiento</p>
+            <form>
+                <p>Código: <input type="text" name="campoCode" required></p>
+                <p>Descripción: <input type="text" name="campoDescription" required></p>
+                <p>Fecha: <input type="date" name="campoDate" required></p>
+                <p>Precio: <input type="number" name="campoPrice" min="1" step="0.01" required></p>
+            </form>
+        </div>
+        <div id="listTreatments">
+            <br>
+            <h2>Listar Tratamientos</h2>
+            <br>
+        </div>
+        <div id="chargeTreatment">
+            <br>
+            <h2>Cobrar Tratamiento</h2>
+            <br>
+        </div>
+    </div>
+    <script src="Scripts/pageBuilder.js"></script>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+        </script>
 </body>
 
 </html>
