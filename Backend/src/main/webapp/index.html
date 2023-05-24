@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <title>Clínica Dentista</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/global.css">
+</head>
+
+<body>
+    <h1>Base de Datos: ClínicaDentista</h1>
+    <br>
+    <div class="mb-3">
+        <label class="form-label">Seleccione una opción</label>
+        <select class="form-select form-select-lg" name="options" id="optionSelect" onchange="javascript:buildPage();">
+            <option value="" selected disabled hidden>Selecciona una opción</option>
+            <option value="addPatient">Añadir Paciente</option>
+            <option value="listPatients">Listar Pacientes</option>
+            <option value="addTreatment">Añadir Tratamiento</option>
+            <option value="listTreatments">Listar Tratamientos</option>
+            <option value="chargeTreatment">Cobrar un Tratamiento</option>
+        </select>
+    </div>
+    <div id="page">
+        <div id="addPatient">
+            <br>
+            <h2>Añadir Paciente</h2>
+            <br>
+            <h3>Introduzca los datos del nuevo paciente</h3>
+            <br>
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" maxlength="45" class="form-control" name="" id="addPatient_name" placeholder="Nombre del paciente">
+                <br>
+                <label class="form-label">Apellidos</label>
+                <input type="text" maxlength="45" class="form-control" name="" id="addPatient_surname" placeholder="Apellidos del paciente">
+                <br>
+                <label class="form-label">Número de teléfono</label>
+                <input type="text" maxlength="45" class="form-control" name="" id="addPatient_phoneNumber" placeholder="Teléfono del paciente">
+                <br>
+                <label class="form-label">Email</label>
+                <input type="email" maxlength="45" class="form-control" name="" id="addPatient_email" placeholder="Email del paciente">
+                <br>
+                <label class="form-label">DNI</label>
+                <input type="text" maxlength="9" class="form-control" name="" id="addPatient_dni" placeholder="DNI del paciente">
+                <br>
+                <label class="form-label">Fecha de nacimiento</label>
+                <input type="date" class="form-control" name="" id="addPatient_bornDate">
+            </div>
+        </div>
+        <div id="listPatients">
+            <br>
+            <h2>Listar Pacientes</h2>
+            <br>
+            <h3>Introduzca los datos para filtrar</h3>
+            <br>
+            <div class="mb-3">
+                <label class="form-label">Apellidos</label>
+                <input type="text" maxlength="45" class="form-control" name="" id="listPatients_surname" placeholder="Apellidos del paciente">
+            </div>
+        </div>
+        <div id="addTreatment">
+            <br>
+            <h2>Añadir Paciente</h2>
+            <br>
+            <h3>Introduzca los datos del Tratamiento</h3>
+            <br>
+            <div class="mb-3">
+                <label class="form-label">Paciente</label>
+                <input type="text" maxlength="9" class="form-control" name="" id="addTreatment_patient" placeholder="DNI del paciente">
+                <br>
+                <label class="form-label">Código</label>
+                <input type="text" maxlength="45" class="form-control" name="" id="addTreatment_code" placeholder="Código del tratamiento">
+                <br>
+                <label class="form-label">Descripción</label>
+                <input type="text" maxlength="100" class="form-control" name="" id="addTreatment_description" placeholder="Descripción del tratamiento">
+                <br>
+                <label class="form-label">Fecha</label>
+                <input type="date" class="form-control" name="" id="addTreatment_date">
+                <br>
+                <label class="form-label">Precio</label>
+                <input type="number" min="0" max="99999999.99" class="form-control" name="" id="addTreatment_price" placeholder="Precio del tratamiento">
+                <br>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="addTreatment_isPaid">
+                    <label class="form-check-label">
+                        ¿Pagado?
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div id="listTreatments">
+            <br>
+            <h2>Listar Tratamientos</h2>
+            <br>
+            <h3>Introduzca los datos para filtrar</h3>
+            <br>
+            <div class="mb-3">
+                <label class="form-label">Paciente</label>
+                <input type="text" maxlength="9" class="form-control" name="" id="listTreatments_patient" placeholder="DNI del paciente">
+            </div>
+        </div>
+        <div id="chargeTreatment">
+            <br>
+            <h2>Cobrar Tratamiento</h2>
+            <br>
+            <h3>Introduzca los datos del tratamiento</h3>
+            <br>
+            <div class="mb-3">
+                <label class="form-label">Paciente</label>
+                <input type="text" maxlength="9" class="form-control" name="" id="chargeTreatment_patient" placeholder="DNI del paciente">
+                <br>
+                <label class="form-label">Tratamiento</label>
+                <input type="text" maxlength="45" class="form-control" name="" id="chargeTreatment_treatment" placeholder="Código del tratamiento">
+            </div>
+        </div>
+    </div>
+    <div class="d-grid gap-2">
+        <button type="button" name="" id="submit-btn" class="btn btn-primary" onclick="generateQuery();">Enviar</button>
+    </div>
+    <script src="js/scripts.js"></script>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>

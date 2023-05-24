@@ -1,0 +1,28 @@
+* {
+    color: white;
+}
+
+body {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+button  {
+    color: black;
+}
+
+select {
+    color: black;
+}
+
+option {
+    color: black;
+}
+
+#page > div {
+    display: none;
+}
