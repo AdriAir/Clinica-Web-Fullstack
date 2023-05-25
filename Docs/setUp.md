@@ -18,6 +18,7 @@
 
     source ClinicaDentista.sql
     source principal.sql
+    GRANT ALL PRIVILEGES ON ClinicaDentista.* TO 'principal'@'%';
     exit
     ```
 3. Abrimos la carpeta Backend con intelliJ

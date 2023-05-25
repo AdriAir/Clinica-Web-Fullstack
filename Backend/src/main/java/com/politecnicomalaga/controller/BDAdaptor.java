@@ -6,10 +6,12 @@ import java.sql.*;
 
 public class BDAdaptor {
     private String lastError;
+    private String status;
 
     //CONSTRUCTOR
     public BDAdaptor() {
         lastError = "";
+        status = "";
     }
 
     //Methods
@@ -18,16 +20,25 @@ public class BDAdaptor {
         // Initialize all the information regarding
         // Database Connection
         String dbDriver = "com.mysql.jdbc.Driver";
-        String dbURL = "jdbc:mysql://bbdd:3306/ClinicaDentista";
+        String dbURL = "jdbc:mysql://bbdd:3306/";
+        String dbName = "ClinicaDentista";
         // Database name to access
         String dbUsername = "principal";
         String dbPassword = "1234";
 
+        status = "<br><p>" + dbDriver + "</p><br>";
+        status += "<br><p>" + dbURL + "</p><br>";
+        status += "<br><p>" + dbName + "</p><br>";
+        status += "<br><p>" + dbUsername + "</p><br>";
+        status += "<br><p>" + dbPassword + "</p><br>";
+
+
         try {
             Class.forName(dbDriver);
-            connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
+            connection = DriverManager.getConnection(dbURL + dbName, dbUsername, dbPassword);
         } catch (Exception exception) {
             lastError = lastError + "<br><p>Error conectando a la BBDD: " + exception.getMessage() + "</p><br>";
+            lastError = lastError + status;
             exception.printStackTrace();
         }
         return connection;
@@ -38,6 +49,7 @@ public class BDAdaptor {
         String dni, name, surname, phoneNumber, email, bornDate, clinic;
         Connection connection = null;
         Statement statement = null;
+        String status = "";
         PreparedStatement preparedStatement = null;
         int rows = 0;
         try {
@@ -46,6 +58,7 @@ public class BDAdaptor {
             preparedStatement = connection.prepareStatement("select * from Patient where surname like ?;");
             preparedStatement.setString(1, "%" + apellidos + "%");
 
+            status = "<p>SQL: select * from Patient where surname like ?";
             //ResultSet = statement.executeQuery("select * from proveedores");
             ResultSet resultSet = preparedStatement.executeQuery();
             result = new StringBuilder();
@@ -99,6 +112,7 @@ public class BDAdaptor {
             result.append("</table>");
         } catch (Exception exception) {
             lastError = lastError + "<br><p>Error accediendo a la BBDD Select: " + exception.getMessage() + "</p><br>";
+            lastError = lastError + status;
             exception.printStackTrace();
         } finally {
             // Liberamos recursos. Cerramos sentencia y conexión
@@ -107,12 +121,13 @@ public class BDAdaptor {
                 if (preparedStatement != null) preparedStatement.close();
             } catch (Exception exception) {
                 lastError = lastError + "<br><p>Error cerrando la BBDD: " + exception.getMessage() + "</p><br>";
+                lastError += status;
                 exception.printStackTrace();
             }
         }
         result.append("\n<p>Filas recogidas: ").append(rows).append(" </p><br>");
         if (lastError.isEmpty()) return result.toString();
-        else return result + lastError;
+        else return result + lastError + status;
     }
 
     public String listTreatments(String dni) {
