@@ -28,21 +28,6 @@ Reparto de tareas:
         - Testing: Testing de la Clínica
         - BDAdaptor
 
-Resultado y decisiones a tomar en la reuniones SCRUM:
-
-    Hemos comentado y dividido el trabajo para realizar el backend:
-
-    DÍA 1:
-
-        - Trabajo repartido
-        - Elaboración del modelo
-        - Revisión y control de excepciones
-        - Montaje de controladores para SQL (JDBC) y HTTPServlets (Tomcat)
-
-    DÍA 2:
-
-    DÍA 3 (Entrega):
-
 Objetivos:
 
     Vamos a dividir el trabajo de la siguiente forma:
@@ -52,20 +37,21 @@ Objetivos:
     Revisión del modelo:
 
         [X] Añadir Control de Exepciones
-        [-] Revisar el correcto funcionamiento del modelo (no hace falta usar tests, pero a quien le toque, si lo hace, le irá mejor para el examen)
+        [X] Revisar el correcto funcionamiento del modelo (tests)
 
     Base de datos:
 
         [X] Crear un usuarios con privilegios para realizar consultas e insertar datos
-        [] Crear controlador para manejar una base de datos en MySQL para las 3 tablas (clínica, pacientes y tratamientos) con la librería JDBC
-        [] Controlar las HTTPServlets
+        [X] Crear controlador para manejar una base de datos en MySQL para las 3 tablas (clínica, pacientes y tratamientos) con la librería JDBC
+        [X] Controlar las HTTPServlets
 
     Montar Servidor:
 
-        [] Configurar el servicio web y sql (puertos y tal)
-        [] Iniciar el servidor e intentar hacer una pequeña prueba con url manuales
+        [X] Configurar el servicio web y sql (puertos y tal)
+        [X] Iniciar el servidor e intentar hacer una pequeña prueba con url manuales
 
+<h3>
 
-    FRONTEND:
+- [VER REGISTRO DE PROBLEMAS ABIERTOS](./logs/log.md)
 
-    Adelanto: Para el frontend realizaremos un formulario en HTML y css que, mediante JavaScript, traduzca los datos y los inserte en la barra de búsqueda con el formato de consulta definido en el controlador sql del servlet hecho en java.
+</h3>
