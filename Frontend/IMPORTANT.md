@@ -1,0 +1,1 @@
+Copiar la carpeta ./webapp a Backend/src/main antes de buildear el .WAR
